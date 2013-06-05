@@ -1,0 +1,121 @@
+global int $emitterCount = 0;
+global string $surfaceMesh;
+global proc createBubbleSimMenu()
+{
+    global string $gMainWindow;
+    setParent $gMainWindow;
+
+    menu -l "SimBubble" -p MayaWindow -to 1 BubbleSimulation;
+    menuItem -l "Create Bubble Simulation" -echoCommand true -command "CreateBubbleSim();" CreateBubbleSim;
+    menuItem -echoCommand true -optionBox true -command "BubbleSimOptions();" BubbleSimOptions;
+    menuItem -l "Add Bubble Emitter" -echoCommand true -command "AddBubbleEmitter();" AddBubbleEmitter;
+    menuItem -echoCommand true -optionBox true -command "AddEmitterOptions();" AddEmitterOptions;
+    
+}
+
+global proc CreateBubbleSim()
+{
+    string $sel[] = `ls -selection`;
+    int $sizeSel = size($sel);   
+    if($sizeSel == 0)
+        error "No fluid selected!"; 
+    else if($sizeSel > 1)
+        error "Too many fluids selected!";
+    else
+    {    
+        // get fluidShape node
+        string $fluidNames[] = `pickWalk -d down`;
+        string $fluidName = $fluidNames[0];
+        int $isFluid = `objectType -isType "fluidShape" $fluidName`;
+        // Should determine type of selected
+        if($isFluid != 1)
+            error "selected object is not fluid";
+        // create bubble and apply shader
+        string $shaderDir = `getenv MAYA_APP_DIR`+ "/plug-ins/BubbleShader.mb";
+        file -import -type "mayaBinary" -ra true -mergeNamespacesOnClash false -namespace "BubbleShader" -options "v=0;"  -pr -loadReferenceDepth "all" $shaderDir;
+        polySphere -n bubblePrime;
+        select -r BubbleShader:WaterBubble ;
+        defaultNavigation -source BubbleShader:WaterBubble -destination |bubblePrime|bubblePrimeShape.instObjGroups[0] -connectToExisting;
+        setAttr "polySphere1.subdivisionsAxis" 10;
+        setAttr "polySphere1.subdivisionsHeight" 10;
+        select -r bubblePrime ;
+        HideSelectedObjects;
+        instancer;
+        createNode BubbleSimMaya -n BubbleSim1;
+        connectAttr bubblePrime.matrix instancer1.inputHierarchy[0];
+        connectAttr BubbleSim1.outPoints instancer1.inputPoints;
+        connectAttr -f time1.outTime BubbleSim1.time;         
+        connectAttr -f ($fluidName+".boundingBoxMin") BubbleSim1.boundBoxMin;
+        connectAttr -f ($fluidName+".boundingBoxMax") BubbleSim1.boundBoxMax;
+        connectAttr -f ($fluidName+".boundingBoxSize") BubbleSim1.boundBoxSize;
+        connectAttr -f ($fluidName+".baseResolution") BubbleSim1.baseReso;
+        connectAttr -f ($fluidName+".fieldData") BubbleSim1.inputData[0];
+         
+        string $fluidConnected[] = `listConnections -t mesh $fluidName`;
+        $surfaceMesh = $fluidConnected[0];
+        rename $surfaceMesh "surfaceMesh";
+    
+        AddBubbleEmitter();
+        select -r BubbleEmitter0;
+    }
+
+    
+    
+}
+
+global proc BubbleSimOptions()
+{
+    window -title "Bubble";
+	columnLayout -rowSpacing 10 -adj true;
+
+	text -label "Bubble Parameters" -align "center";	
+	global float $wetness, $stiffness, $drag, $liquidAd, $bubbleAt, $solidAd, $solidAt, $damping, $volumeC, $burstingS, $bubbleNumber, $bubbleSize;
+	rowLayout -numberOfColumns 2;
+	text -label "Bubble Number: " ; 
+    textField -editable true -text "0" -cc "$bubbleNumber = #1";
+    setParent..;
+	attrFieldSliderGrp -label "Bubble Size: "  -maxValue 10.0 -minValue 1.0  -cc "$bubbleSize = #1"; 
+	attrFieldSliderGrp -label "Wetness: "  -maxValue 1.0 -minValue 0.0  -cc "$wetness = #1"; 
+	attrFieldSliderGrp -label "Stiffness: " -maxValue 8.0 -minValue 1.0  -cc "$stiffness = #1";
+	attrFieldSliderGrp -label "Drag"  -maxValue 0.5 -minValue 0.05 -cc "$drag = #1"; 
+	attrFieldSliderGrp -label "Liquid Adhesion: "  -maxValue 20.0 -minValue 10.0 -cc "$liquidAd = #1"; 
+	attrFieldSliderGrp -label "Bubble Attraction: " -maxValue 0.6 -minValue 0.2 -cc "$bubbleAt = #1"; 
+	attrFieldSliderGrp -label "Solid Adhesion: "  -maxValue 30.0 -minValue 15.0 -cc "$solidAd = #1"; 
+	attrFieldSliderGrp -label "Solid Attraction: "  -maxValue 6.0 -minValue 2.0 -cc "$solidAt = #1"; 
+	attrFieldSliderGrp -label "Damping: "  -maxValue 1.0 -minValue 0.1 -cc "$damping = #1"; 
+	//attrFieldSliderGrp -label "Volume Correction: "  -maxValue 1.0 -minValue 1.0 -cc "$volumeC = #1"; 
+	attrFieldSliderGrp -label "Bursting Speed: "  -maxValue 0.2 -minValue 0.0125 -cc "$burstingS = #1"; 
+	rowLayout -numberOfColumns 2 -cw2 240 240 -ct2 "both" "both" ;
+	button -label "Apply" -   c "setAttr BubbleSim1.stiffCoeff $stiffness;\
+	                             setAttr BubbleSim1.weakCoeff $bubbleAt; \
+	                             setAttr BubbleSim1.dampCoeffV $damping; \
+	                             setAttr BubbleSim1.dampCoeffL $damping; \
+	                             setAttr BubbleSim1.solidAdhesionCoeff $solidAd; \
+	                             setAttr BubbleSim1.solidAttractionCoeff $solidAt; \
+	                             setAttr BubbleSim1.burstingCoeff $burstingS; \
+	                             setAttr BubbleSim1.wetness $wetness; \
+	                             setAttr BubbleSim1.liquidAdhesion $liquidAd; \
+	                             setAttr BubbleSim1.dragCoeff $drag; \
+	                             setAttr BubbleSim1.bubbleNumber $bubbleNumber; \
+	                             setAttr BubbleSim1.bubbleSize $bubbleSize;";
+	//button -label "Save";
+	button -label "Cancel";
+	setParent ..;
+	showWindow ;
+}
+global proc AddBubbleEmitter()
+{
+    global int $emitterCount;
+    string $eCount = $emitterCount;
+    string $emitterName = "BubbleEmitter"+$eCount;
+    spaceLocator -p 0 0 0 -n $emitterName;
+    connectAttr -f ($emitterName+".translate") BubbleSim1.emitterPosition[$emitterCount];
+    $emitterCount++;
+    select -r $emitterName;
+}
+ 
+global proc deleteBubbleSimMenu()
+{
+    deleteUI -menu BubbleSimulation;
+}
+
