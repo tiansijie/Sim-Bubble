@@ -1,0 +1,18 @@
+﻿Build started 3/31/2013 4:50:26 PM.
+     1>Project "E:\Documents\Visual Studio 2010\Projects\Advanced CG\Bubble\Bubble\Bubble.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "x64\Release\Bubble.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         Bubble.vcxproj -> E:\Documents\Visual Studio 2010\Projects\Advanced CG\Bubble\x64\Release\Bubble.exe
+       FinalizeBuildStatus:
+         Deleting file "x64\Release\Bubble.unsuccessfulbuild".
+         Touching "x64\Release\Bubble.lastbuildstate".
+     1>Done Building Project "E:\Documents\Visual Studio 2010\Projects\Advanced CG\Bubble\Bubble\Bubble.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.20

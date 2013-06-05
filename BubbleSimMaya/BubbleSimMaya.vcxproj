@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_2012|Win32">
+      <Configuration>Debug_2012</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_2012|x64">
+      <Configuration>Debug_2012</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2012|Win32">
+      <Configuration>Release_2012</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2012|x64">
+      <Configuration>Release_2012</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0995729B-FD66-45AE-8E17-0D61100B0BAC}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug_2012|Win32'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2012|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release_2012|Win32'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2012|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2012|Win32'">
+    <IntDir>$(ConfigurationName)</IntDir>
+    <OutDir>$(ConfigurationName)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2012|x64'">
+    <IntDir>$(ConfigurationName)</IntDir>
+    <OutDir>$(ConfigurationName)</OutDir>
+    <TargetExt>.mll</TargetExt>
+    <TargetName>$(ProjectName)_debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2012|Win32'">
+    <IntDir>$(ConfigurationName)</IntDir>
+    <OutDir>$(ConfigurationName)</OutDir>
+    <TargetExt>.mll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2012|x64'">
+    <IntDir>$(ConfigurationName)</IntDir>
+    <OutDir>
+    </OutDir>
+    <TargetExt>.mll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2012|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\Maya2012\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeaderOutputFile>$(ConfigurationName)/BubbleSimMaya.pch</PrecompiledHeaderOutputFile>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/Gm /GR /GS /EHsc /Zi /I "." /D "WIN32" /D "_DEBUG" /RTC1 /c %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2012\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(ConfigurationName)\BubbleSimMaya.mll</OutputFile>
+      <ImportLibrary>$(ConfigurationName)/BubbleSimMaya.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(ConfigurationName)/BubbleSimMaya.pdb</ProgramDatabaseFile>
+      <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2012|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Program Files\Autodesk\Maya2013\include;E:\Program Files\boost\boost_1_51;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\gmp\include;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\CGAL Install\include;glm;glew/include;glfw/include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeaderOutputFile>$(ConfigurationName)/BubbleSimMaya.pch</PrecompiledHeaderOutputFile>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/Gm /GR /GS /EHsc /Zi /I "." /D "WIN32" /D "_DEBUG" /RTC1 /c %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libgmp-10.lib;libmpfr-4.lib;boost_chrono-vc100-mt-1_51.lib;OpenMaya.lib;OpenMayaFX.lib;OpenMayaUI.lib;Foundation.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Program Files\Autodesk\Maya2013\lib;E:\Program Files\boost\boost_1_51\lib;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\gmp\lib;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\CGAL Install\lib</AdditionalLibraryDirectories>
+      <OutputFile>$(ConfigurationName)\BubbleSimMaya_debug.mll</OutputFile>
+      <ImportLibrary>$(ConfigurationName)/BubbleSimMaya.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(ConfigurationName)/BubbleSimMaya.pdb</ProgramDatabaseFile>
+      <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2012|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Program Files %28x86%29\Autodesk\Maya2013\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeaderOutputFile>$(ConfigurationName)/BubbleSimMaya.pch</PrecompiledHeaderOutputFile>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/GR /GS /EHsc /I "."  /c %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Program Files %28x86%29\Autodesk\Maya2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(ConfigurationName)\BubbleSimMaya.mll</OutputFile>
+      <ImportLibrary>$(ConfigurationName)/BubbleSimMaya.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(ConfigurationName)/BubbleSimMaya.pdb</ProgramDatabaseFile>
+      <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2012|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Program Files\Autodesk\Maya2013\include;E:\Program Files\boost\boost_1_51;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\gmp\include;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\CGAL Install\include;glm;glew/include;glfw/include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeaderOutputFile>$(ConfigurationName)/BubbleSimMaya.pch</PrecompiledHeaderOutputFile>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/GR /GS /EHsc /I "."  /c %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libgmp-10.lib;libmpfr-4.lib;boost_chrono-vc100-mt-1_51.lib;OpenMaya.lib;OpenMayaFX.lib;OpenMayaUI.lib;Foundation.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Program Files\Autodesk\Maya2013\lib;E:\Program Files\boost\boost_1_51\lib;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\gmp\lib;G:\Visual Studio 2010\Projects\Advanced CG\Bubble\CGAL Install\lib</AdditionalLibraryDirectories>
+      <OutputFile>$(ProjectName).mll</OutputFile>
+      <ImportLibrary>$(ConfigurationName)/BubbleSimMaya.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(ConfigurationName)/BubbleSimMaya.pdb</ProgramDatabaseFile>
+      <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Options.txt" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Bubble\bubble.h" />
+    <ClInclude Include="..\Bubble\bubble_sim.h" />
+    <ClInclude Include="array1.h" />
+    <ClInclude Include="array2.h" />
+    <ClInclude Include="array3.h" />
+    <ClInclude Include="BubbleEmitterMayaNode.h" />
+    <ClInclude Include="BubbleGeniusCmd.h" />
+    <ClInclude Include="BubbleSimMayaNode.h" />
+    <ClInclude Include="extern.h" />
+    <ClInclude Include="hashgrid.h" />
+    <ClInclude Include="hashtable.h" />
+    <ClInclude Include="util.h" />
+    <ClInclude Include="vec.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Bubble\bubble.cpp" />
+    <ClCompile Include="..\Bubble\bubble_sim.cpp" />
+    <ClCompile Include="BubbleEmitterMayaNode.cpp" />
+    <ClCompile Include="BubbleGeniusCmd.cpp" />
+    <ClCompile Include="BubbleSimMayaNode.cpp" />
+    <ClCompile Include="extern.cpp" />
+    <ClCompile Include="makelevelset3.cpp" />
+    <ClCompile Include="pluginMain.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
